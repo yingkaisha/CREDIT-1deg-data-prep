@@ -2,14 +2,14 @@
 A collection of helper functions for the data visualization of CREDIT forecasts
 -------------------------------------------------------
 Content:
-    - lg_box()
-    - lg_clean()
-    - ax_decorate()
-    - ax_decorate_box()
-    - precip_cmap()
-    - string_partial_format()
-    - cmap_combine()
-    - xcolor()
+    - lg_box
+    - lg_clean
+    - ax_decorate
+    - ax_decorate_box
+    - precip_cmap
+    - string_partial_format
+    - cmap_combine
+    - xcolor
     
 Yingkai Sha
 ksha@ucar.edu

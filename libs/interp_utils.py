@@ -1,13 +1,23 @@
-from __future__ import annotations
+'''
+This scripts contains functions that performs nearest, bilinear, and conservative interpolation
+on xarray.Datasets. The original version of this script is available at WeatherBench2.
 
-import dataclasses
-import functools
-from typing import Union
+Yingkai Sha
+ksha@ucar.edu
 
+Reference
+ - WeatherBench2 regridding: 
+     https://github.com/google-research/weatherbench2/blob/main/weatherbench2/regridding.py
+'''
+
+import xarray
 import numpy as np
 from sklearn import neighbors
-import xarray
 
+import functools
+import dataclasses
+from typing import Union
+from __future__ import annotations
 Array = Union[np.ndarray]
 
 @dataclasses.dataclass(frozen=True)

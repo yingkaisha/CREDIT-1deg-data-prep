@@ -1,3 +1,16 @@
+'''
+This script containts functions for the computation of physcis-based 
+relationships using xarray.Dataset.
+-------------------------------------------------------
+Content:
+    - grid_area
+    - pressure_integral
+    - weighted_sum
+
+Yingkai Sha
+ksha@ucar.edu
+'''
+
 import xarray as xr
 import numpy as np
 
