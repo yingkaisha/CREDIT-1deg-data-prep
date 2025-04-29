@@ -1,0 +1,30 @@
+qsub:
+    qsub_loc: '/glade/u/home/xxxx/CREDIT-1deg-data-prep/qsub/'
+    scripts_loc: '/glade/u/home/xxxx/CREDIT-1deg-data-prep/verification/scripts/'
+    plot_data_loc: '/glade/campaign/cisl/aiml/xxxx/PLOT_data/'
+
+ERA5_verif:
+    save_loc: 'xxxx'
+    save_loc_clim: 'xxxx'
+    
+ERA5_ours:
+    save_loc: '/glade/derecho/scratch/ksha/CREDIT_data/ERA5_mlevel_cesm_stage1/all_in_one/ERA5_mlevel_cesm_6h_lev16_*.zarr'
+    save_loc_clim: 'xxx'
+    year_range: [2020, 2022]
+
+IFS:
+    save_loc: '/glade/campaign/cisl/aiml/ksha/CREDIT_physics/GATHER/IFS/'
+    save_loc_gather: '/glade/campaign/cisl/aiml/ksha/CREDIT_physics/GATHER/IFS/'
+    save_loc_verif: '/glade/campaign/cisl/aiml/xxxx/CREDIT_physics/VERIF/IFS/'
+    year_range: [2020, 2021]
+    lead_range: [6, 240]
+    verif_lead_range: [6, 240]
+
+your_model:
+    save_loc_rollout: 'xxxx'
+    save_loc_gather: 'xxxx'
+    save_loc_verif: 'xxxx'
+    year_range: [2020, 2021]
+    lead_range: [6, 360]
+    verif_lead_range: [6, 360]
+    
