@@ -18,7 +18,6 @@ from sklearn import neighbors
 import functools
 import dataclasses
 from typing import Union
-
 Array = Union[np.ndarray]
 
 @dataclasses.dataclass(frozen=True)
