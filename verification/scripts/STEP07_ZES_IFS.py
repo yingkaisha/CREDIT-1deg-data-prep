@@ -11,6 +11,7 @@ import yaml
 import argparse
 from glob import glob
 from datetime import datetime, timedelta
+from weatherbench2.derived_variables import ZonalEnergySpectrum
 
 import numpy as np
 import xarray as xr
@@ -97,16 +98,17 @@ for i, ind_pick in enumerate(ind_lead):
         ds_ours = ds_ours.isel(time=ind_pick)
         ds_ours = vu.ds_subset_everything(ds_ours, variables_levels)
         ds_ours = ds_ours.compute()
-        
+        ds_ours = ds_ours.rename({'T': 'T500', 'U': 'U500', 'V': 'V500'})
+        ds_ours = ds_ours.squeeze(dim="level").drop_vars(['level'])
         # -------------------------------------------------------------- #
         # potential temperature
-        ds_ours['theta'] = ds_ours['T'] * (1000/500)**(287.0/1004)
-
+        ds_ours['theta500'] = ds_ours['T500'] * (1000/500)**(287.0/1004)
         # -------------------------------------------------------------- #
         zes_temp = []
-        for var in ['U', 'V', 'theta']:
-            zes = su.zonal_energy_spectrum_sph(ds_ours.isel(latitude=slice(1, None)), var)
-            zes_temp.append(zes)
+        for var in ['U500', 'V500', 'theta500']:
+            calc = ZonalEnergySpectrum(var)
+            result_fft = calc.compute(ds_ours)
+            zes_temp.append(result_fft.rename(var))
             
         verif_results.append(xr.merge(zes_temp))
     

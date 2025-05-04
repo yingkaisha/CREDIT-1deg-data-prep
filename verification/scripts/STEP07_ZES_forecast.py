@@ -5,6 +5,7 @@ import yaml
 import argparse
 from glob import glob
 from datetime import datetime, timedelta
+from weatherbench2.derived_variables import ZonalEnergySpectrum
 
 import numpy as np
 import xarray as xr
@@ -61,14 +62,10 @@ filename_OURS = filename_OURS[verif_ind_start:verif_ind_end]
 
 # ---------------------------------------------------------------------------------------- #
 variables_levels = {
-    'T': [500,],
-    'U': [500],
-    'V': [500]
+    'T500': None,
+    'U500': None,
+    'V500': None
 }
-
-levels = np.array([   1.,   50.,  150.,  200.,  250.,  
-                    300.,  400.,  500.,  600.,  700., 
-                     850.,  925., 1000.])
 
 # ---------------------------------------------------------------------------------------- #
 # loop over lead time, init time, variables to compute zes
@@ -78,20 +75,19 @@ for i, ind_pick in enumerate(ind_lead):
     
     for fn_ours in filename_OURS:
         ds_ours = xr.open_dataset(fn_ours)
-        ds_ours['level'] = levels
         ds_ours = vu.ds_subset_everything(ds_ours, variables_levels)
         ds_ours = ds_ours.isel(time=ind_pick)
         ds_ours = ds_ours.compute()
         
         # -------------------------------------------------------------- #
         # potential temperature
-        ds_ours['theta'] = ds_ours['T'] * (1000/500)**(287.0/1004)
-
+        ds_ours['theta500'] = ds_ours['T500'] * (1000/500)**(287.0/1004)
         # -------------------------------------------------------------- #
         zes_temp = []
-        for var in ['U', 'V', 'theta']:
-            zes = su.zonal_energy_spectrum_sph(ds_ours.isel(latitude=slice(1, None)), var)
-            zes_temp.append(zes)
+        for var in ['U500', 'V500', 'theta500']:
+            calc = ZonalEnergySpectrum(var)
+            result_fft = calc.compute(ds_ours)
+            zes_temp.append(result_fft.rename(var))
             
         verif_results.append(xr.merge(zes_temp))
     
